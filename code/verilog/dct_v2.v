@@ -241,8 +241,6 @@ always @(posedge clk or negedge reset) begin
             end
          end else begin
             product <= data[i];
-            // $display("product[%d] = %b", i, data[i]);
-            
             i = i + 1; 
             if(i == 64) begin
                load_finished <= 1;
@@ -262,16 +260,7 @@ always @(posedge clk or negedge reset) begin
             x7 <= data[i * 8 + 7];
          end
 
-         if(oft) begin
-            $display("row %d", i);
-            // $display("y0 = %b", y0);
-            // $display("y1 = %b", y1);
-            // $display("y2 = %b", y2);
-            // $display("y3 = %b", y3);
-            // $display("y4 = %b", y4);
-            // $display("y5 = %b", y5);
-            // $display("y6 = %b", y6);
-            // $display("y7 = %b", y7);
+         if(oft) begin            
             data[(i - 1) * 8] = y0;
             data[(i - 1) * 8 + 1] = y1;
             data[(i - 1) * 8 + 2] = y2;
@@ -280,15 +269,6 @@ always @(posedge clk or negedge reset) begin
             data[(i - 1) * 8 + 5] = y5;
             data[(i - 1) * 8 + 6] = y6;
             data[(i - 1) * 8 + 7] = y7;
-            $display("data[%d] = %b", (i - 1)*8 , data[(i - 1) * 8]);
-            $display("data[%d] = %b", (i - 1)*8+1 , data[(i - 1)*8+1]);
-            $display("data[%d] = %b", (i - 1)*8+2 , data[(i - 1)*8+2]);
-            $display("data[%d] = %b", (i - 1)*8+3 , data[(i - 1)*8+3]);
-            $display("data[%d] = %b", (i - 1)*8+4 , data[(i - 1)*8+4]);
-            $display("data[%d] = %b", (i - 1)*8+5 , data[(i - 1)*8+5]);
-            $display("data[%d] = %b", (i - 1)*8+6 , data[(i - 1)*8+6]);
-            $display("data[%d] = %b", (i - 1)*8+7 , data[(i - 1)*8+7]);
-
             i = i + 1;
             
          end
@@ -324,24 +304,11 @@ always @(posedge clk or negedge reset) begin
             j = i;
             if (i == 8 ) begin
                transpose_finished <= 1;
-               // $display("=============== TRANSPOSE ====================");
-               // $display("data[%d] = %b", (i - 1)*8 , data[(i - 1) * 8]);
-               // $display("data[%d] = %b", (i - 1)*8+1 , data[(i - 1)*8+1]);
-               // $display("data[%d] = %b", (i - 1)*8+2 , data[(i - 1)*8+2]);
-               // $display("data[%d] = %b", (i - 1)*8+3 , data[(i - 1)*8+3]);
-               // $display("data[%d] = %b", (i - 1)*8+4 , data[(i - 1)*8+4]);
-               // $display("data[%d] = %b", (i - 1)*8+5 , data[(i - 1)*8+5]);
-               // $display("data[%d] = %b", (i - 1)*8+6 , data[(i - 1)*8+6]);
-               // $display("data[%d] = %b", (i - 1)*8+7 , data[(i - 1)*8+7]);
                
             end
          end
       end
    end
-
-  
-
-
 end
 
 endmodule
@@ -397,16 +364,6 @@ always @(posedge clk or negedge reset) begin
       oft <= 0;
    end
 end
-
- // stage 1
-
-// butterfly b1(
-//    .x_in (x0),
-//    .y_in (x7),
-//    .sum (btsum1),
-//    .subtract (btsub1)
-
-// );
 
 always @(*) begin
    oft = 0;
@@ -502,17 +459,6 @@ always @(*) begin
 
    y3 = a3[51:20];
    y5 = a5[51:20];
-
-
-   // $display("y0 = %b", y0);
-   // $display("y4 = %b", y4);
-   // $display("y2 = %b", y2);
-   // $display("y6 = %b", y6);
-   // $display("y1 = %b", y1);
-   // $display("y7 = %b", y7);
-   // $display("y3 = %b", y3);
-   // $display("y5 = %b", y5);
-
 
    oft = 1;
 end
